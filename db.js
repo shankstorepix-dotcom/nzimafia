@@ -502,61 +502,97 @@ function getInitialDiscordAccounts() {
 }
 
 function ensureCollections(data) {
-  let changed = false;
-  if (!Array.isArray(data.posts) || data.posts.length === 0) {
-    data.posts = getInitialPosts();
-    changed = true;
+  if (!data || typeof data !== 'object') data = {};
+  try {
+    if (!Array.isArray(data.members)) data.members = [];
+    if (!Array.isArray(data.posts) || data.posts.length === 0) {
+      try { data.posts = getInitialPosts(); } catch (_) { data.posts = []; }
+    }
+    if (!Array.isArray(data.events) || data.events.length === 0) {
+      try { data.events = getInitialEvents(); } catch (_) { data.events = []; }
+    }
+    if (!data.links || typeof data.links !== 'object' || Object.keys(data.links).length === 0) {
+      try { data.links = getInitialLinks(); } catch (_) { data.links = {}; }
+    }
+    if (!Array.isArray(data.discordAccounts) || data.discordAccounts.length === 0) {
+      try { data.discordAccounts = getInitialDiscordAccounts(); } catch (_) { data.discordAccounts = []; }
+    }
+    if (!Array.isArray(data.ccAccounts)) data.ccAccounts = [];
+    if (!Array.isArray(data.panelAccounts)) data.panelAccounts = [];
+    if (!Array.isArray(data.operations)) data.operations = [];
+    if (!Array.isArray(data.announcements)) data.announcements = [];
+    if (!Array.isArray(data.transactions)) data.transactions = [];
+    if (!Array.isArray(data.auditLogs)) data.auditLogs = [];
+    if (!data.financials) data.financials = {};
+  } catch (err) {
+    console.warn('[DB] ensureCollections:', err.message);
   }
-  if (!Array.isArray(data.events) || data.events.length === 0) {
-    data.events = getInitialEvents();
-    changed = true;
-  }
-  if (!data.links || typeof data.links !== 'object' || Object.keys(data.links).length === 0) {
-    data.links = getInitialLinks();
-    changed = true;
-  }
-  if (!Array.isArray(data.discordAccounts) || data.discordAccounts.length === 0) {
-    data.discordAccounts = getInitialDiscordAccounts();
-    changed = true;
-  }
-  if (!Array.isArray(data.ccAccounts)) {
-    data.ccAccounts = [];
-    changed = true;
-  }
-  if (!Array.isArray(data.panelAccounts)) {
-    data.panelAccounts = [];
-    changed = true;
-  }
-  if (changed) {
-    saveDb(data);
-  }
+  // Nunca grava em disco no ensure — evita crash no Vercel
   return data;
 }
 
+// Cache em memória — no Vercel o disco é read-only e paths de includeFiles variam
+let _memoryDb = null;
+
 function initDb() {
-  try {
-    if (fs.existsSync(DB_FILE)) {
-      const raw = fs.readFileSync(DB_FILE, 'utf8');
-      const parsed = JSON.parse(raw);
-      return ensureCollections(parsed);
+  if (_memoryDb) return _memoryDb;
+
+  // 1) Tenta ler database.json de vários caminhos possíveis no Vercel
+  const candidates = [
+    DB_FILE,
+    path.join(process.cwd(), 'data', 'database.json'),
+    path.join(__dirname, 'data', 'database.json'),
+    path.join(__dirname, '..', 'data', 'database.json')
+  ];
+
+  for (const file of candidates) {
+    try {
+      if (fs.existsSync(file)) {
+        const raw = fs.readFileSync(file, 'utf8');
+        const parsed = JSON.parse(raw);
+        _memoryDb = ensureCollections(parsed);
+        console.log('[DB] Carregado de', file, '— membros:', (_memoryDb.members || []).length);
+        return _memoryDb;
+      }
+    } catch (err) {
+      console.warn('[DB] Falha ao ler', file, err.message);
     }
-  } catch (err) {
-    console.error("Erro ao ler database.json:", err.message);
   }
-  // Arquivo ausente ou ilegível: usa dados iniciais em memória
-  // (no Vercel o disco é somente leitura — não tenta gravar)
-  const data = getInitialData();
+
+  // 2) Fallback: dados iniciais em memória (PINs 777001…)
   try {
-    if (!fs.existsSync(DB_DIR)) fs.mkdirSync(DB_DIR, { recursive: true });
-    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf8');
-  } catch (_) {
-    /* serverless / read-only — ok */
+    _memoryDb = getInitialData();
+    console.log('[DB] Usando dados iniciais em memória — membros:', (_memoryDb.members || []).length);
+  } catch (err) {
+    console.error('[DB] getInitialData falhou:', err.message);
+    _memoryDb = {
+      members: [],
+      financials: {},
+      operations: [],
+      announcements: [],
+      transactions: [],
+      auditLogs: [],
+      posts: [],
+      events: [],
+      links: {},
+      discordAccounts: [],
+      ccAccounts: [],
+      panelAccounts: []
+    };
   }
-  return data;
+  return _memoryDb;
 }
 
 function getDb() {
-  return initDb();
+  try {
+    return initDb();
+  } catch (err) {
+    console.error('[DB] getDb fatal:', err.message);
+    if (!_memoryDb) {
+      _memoryDb = { members: [], financials: {}, operations: [], announcements: [], transactions: [], auditLogs: [], posts: [], events: [], links: {}, discordAccounts: [], ccAccounts: [], panelAccounts: [] };
+    }
+    return _memoryDb;
+  }
 }
 
 function saveDb(data) {
@@ -574,19 +610,29 @@ function saveDb(data) {
 }
 
 function findMember(identifier) {
-  const db = getDb();
-  if (!identifier) return null;
-  const clean = identifier.toString().trim().toLowerCase();
-  return db.members.find(m => 
-    m.id.toLowerCase() === clean || 
-    m.username.toLowerCase() === clean || 
-    m.name.toLowerCase() === clean
-  );
+  try {
+    const database = getDb();
+    if (!identifier || !database || !Array.isArray(database.members)) return null;
+    const clean = identifier.toString().trim().toLowerCase();
+    return database.members.find(m =>
+      (m.id && String(m.id).toLowerCase() === clean) ||
+      (m.username && String(m.username).toLowerCase() === clean) ||
+      (m.name && String(m.name).toLowerCase() === clean)
+    ) || null;
+  } catch (err) {
+    console.warn('[findMember]', err.message);
+    return null;
+  }
 }
 
 function verifyMemberPin(member, pin) {
-  if (!member || !member.pinHash || !pin) return false;
-  return bcrypt.compareSync(pin, member.pinHash);
+  try {
+    if (!member || !member.pinHash || !pin) return false;
+    return bcrypt.compareSync(String(pin), member.pinHash);
+  } catch (err) {
+    console.warn('[verifyMemberPin]', err.message);
+    return false;
+  }
 }
 
 function updateMemberPin(identifier, newPin) {

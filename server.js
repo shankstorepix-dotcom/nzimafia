@@ -155,6 +155,27 @@ app.get('/api/supabase/status', async (req, res) => {
   });
 });
 
+// Diagnóstico rápido (sem dados sensíveis)
+app.get('/api/health', (req, res) => {
+  try {
+    const database = db.getDb();
+    const members = (database && database.members) || [];
+    res.json({
+      success: true,
+      ok: true,
+      membersCount: members.length,
+      usernames: members.map(m => m.username).slice(0, 15),
+      supabaseConfigured: db.isSupabaseConfigured(),
+      cwd: process.cwd(),
+      dirname: __dirname,
+      node: process.version,
+      vercel: process.env.VERCEL || null
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: String(err.message || err) });
+  }
+});
+
 // Lista de codinomes para o seletor da tela de login (sem dados confidenciais)
 app.get('/api/members/public', async (req, res) => {
   try {
