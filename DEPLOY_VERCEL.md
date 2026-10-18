@@ -1,53 +1,72 @@
-# Deploy NZI Mafia no Vercel
+# Deploy NZI Mafia no Vercel (corrigido 404)
 
-## 1. Subir o projeto
+## Estrutura obrigatória no GitHub
 
-### Opção A — CLI (recomendado)
-```bash
-npm i -g vercel
-cd nzi-vercel-deploy   # pasta deste pacote
-vercel
+Na **raiz do repositório** devem existir estes arquivos (não dentro de subpastas):
+
+```
+/
+├── api/
+│   └── index.js
+├── public/
+│   ├── assets/
+│   ├── dashboard.html
+│   └── ...
+├── server.js
+├── index.html
+├── package.json
+├── vercel.json
+├── mrrobot.gif
+├── auth.js
+├── db.js
+└── ...
 ```
 
-### Opção B — GitHub
-1. Crie um repositório no GitHub e envie esta pasta (sem node_modules).
-2. Em vercel.com → Add New Project → importe o repositório.
-3. **Root Directory:** deixe a raiz (onde está o `server.js`).
-4. Framework Preset: Other.
+Se o GitHub tiver algo como `nzi-dashboard-melhorado/Nzi Mafia/...`, o Vercel **não acha** o `server.js` e devolve **404 NOT_FOUND**.
 
-## 2. Variáveis de ambiente (Vercel → Project → Settings → Environment Variables)
+### Como corrigir a estrutura
+
+1. No GitHub, os arquivos devem estar na raiz do repo.
+2. Ou no Vercel → Project Settings → **General** → **Root Directory** aponte para a pasta onde está o `package.json` / `vercel.json` (ex.: `Nzi Mafia` — evite espaços no nome da pasta).
+
+## Redeploy após esta correção
+
+```bash
+# Na pasta do projeto (raiz com vercel.json)
+git add .
+git commit -m "fix: vercel api entry + config"
+git push
+```
+
+O Vercel faz redeploy automático no push.
+
+## Variáveis de ambiente (obrigatórias)
+
+Vercel → Project → Settings → Environment Variables:
 
 | Nome | Valor |
 |------|--------|
-| `JWT_SECRET` | string longa e aleatória (min. 32 chars) |
+| `JWT_SECRET` | string longa (≥ 32 caracteres) |
 | `ADMIN_SETUP_SECRET` | segredo para criar o 1º admin |
-| `ALLOWED_ORIGINS` | `https://SEU-PROJETO.vercel.app` (e domínio custom se tiver) |
+| `ALLOWED_ORIGINS` | `https://SEU-PROJETO.vercel.app` |
 | `TRUST_PROXY` | `1` |
-| `SUPABASE_URL` | URL do projeto Supabase |
+| `SUPABASE_URL` | URL do Supabase |
 | `SUPABASE_SERVICE_ROLE_KEY` | service role key |
-| `SUPABASE_ANON_KEY` | anon key (opcional) |
+| `SUPABASE_ANON_KEY` | anon key |
 
-> **Importante:** no Vercel o sistema de arquivos é **somente leitura**.  
-> O `data/database.json` **não persiste**. Use **Supabase** em produção  
-> (rode o SQL de `supabase_schema.sql` no SQL Editor do Supabase).
+Depois: **Deployments** → ⋮ no último deploy → **Redeploy**.
 
-## 3. Após o deploy
+## Checklist se ainda der 404
 
-1. Acesse `https://SEU-PROJETO.vercel.app`
-2. GIF da home (`mrrobot.gif`) e do dashboard (`/assets/dashboard-hero.gif`) devem aparecer.
-3. Em **Entretenimento** → estação **Luxúria** → o embed do Spotify carrega (clique Play no player do Spotify; o navegador bloqueia autoplay).
-4. Configure o CORS: coloque a URL do Vercel em `ALLOWED_ORIGINS`.
+1. Abra o deploy no Vercel → aba **Building** / **Logs** e veja se o build passou.
+2. Confirme que `vercel.json` e `api/index.js` estão na **raiz** do que o Vercel considera o projeto.
+3. Root Directory (Settings → General) deve estar vazio **ou** apontar exatamente para a pasta com `package.json`.
+4. Framework Preset: **Other** (não Next.js).
 
-## 4. GIFs personalizados
+## Teste local
 
-Substitua os arquivos placeholder:
-- `mrrobot.gif` (raiz do projeto) → tela inicial
-- `public/assets/dashboard-hero.gif` → hero do dashboard
-
-Depois faça um novo deploy.
-
-## Problemas comuns
-
-- **Spotify não aparece:** CSP já liberado para `open.spotify.com`. Se ainda falhar, limpe o cache do navegador.
-- **Login / API 500:** confira `JWT_SECRET` e Supabase.
-- **CORS bloqueado:** `ALLOWED_ORIGINS` deve incluir a URL exata do site (com https).
+```bash
+npm install
+npm start
+# abra http://localhost:3000
+```

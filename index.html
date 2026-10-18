@@ -545,10 +545,14 @@ footer { margin-top: 72px; padding-top: 16px; border-top: 1px solid var(--line);
     if (!/^\d{6}$/.test(pin)) { msg.textContent = 'O PIN deve ter exatamente 6 dígitos numéricos.'; return; }
     msg.textContent = 'Verificando…';
     fetch('/api/auth/login', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ username: h, pin: pin, hwid: DEVICE_HWID })
-    }).then(function (r) { return r.json(); }).then(function (d) {
+    }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, status: r.status, d: d }; }); }).then(function (res) {
+      var d = res.d;
       if (d && d.success) {
+        if (d.token) { try { localStorage.setItem('nzi_token', d.token); } catch (e) {} }
         msg.textContent = '';
         showWelcome(d.member);
         setTimeout(function () { location.href = d.redirectUrl || '/dashboard'; }, 900);
@@ -556,8 +560,9 @@ footer { margin-top: 72px; padding-top: 16px; border-top: 1px solid var(--line);
         msg.textContent = (d && d.error) || 'Acesso restrito apenas para membros.';
         clearPin();
       }
-    }).catch(function () {
-      msg.textContent = 'Servidor indisponível. Inicie o back-end com "npm start".';
+    }).catch(function (err) {
+      msg.textContent = 'Servidor indisponível ou erro de rede. Tente de novo.';
+      console.error('login error', err);
     });
   });
   document.getElementById('logout').addEventListener('click', function () {

@@ -85,12 +85,12 @@ function decryptSecret(encrypted, ivHex, tagHex) {
 const INITIAL_MEMBERS = [
   {
     id: "mem_1",
-    username: "phlabubu",
+    username: "ph_labubu",
     name: "Ph Labubu",
     role: "Owner",
     level: 1,
     defaultPassword: "NZI#v8Kp!42x",
-    defaultPin: "583104",
+    defaultPin: "777001",
     status: "online",
     profitShare: "40%",
     weeklyEarnings: 48000
@@ -102,7 +102,7 @@ const INITIAL_MEMBERS = [
     role: "Founder",
     level: 2,
     defaultPassword: "Dg@7mQ!92Ls",
-    defaultPin: "716825",
+    defaultPin: "777002",
     status: "online",
     profitShare: "25%",
     weeklyEarnings: 30000
@@ -114,7 +114,7 @@ const INITIAL_MEMBERS = [
     role: "Posse",
     level: 3,
     defaultPassword: "G0d#X4n!81Rp",
-    defaultPin: "294671",
+    defaultPin: "777003",
     status: "em operação",
     profitShare: "7.5%",
     weeklyEarnings: 9000
@@ -126,7 +126,7 @@ const INITIAL_MEMBERS = [
     role: "Posse",
     level: 3,
     defaultPassword: "Fact@9Zk#63W",
-    defaultPin: "840293",
+    defaultPin: "777004",
     status: "online",
     profitShare: "7.5%",
     weeklyEarnings: 9000
@@ -138,7 +138,7 @@ const INITIAL_MEMBERS = [
     role: "Member",
     level: 4,
     defaultPassword: "Anny!5Tp@72M",
-    defaultPin: "165938",
+    defaultPin: "777005",
     status: "online",
     profitShare: "4%",
     weeklyEarnings: 4800
@@ -150,7 +150,7 @@ const INITIAL_MEMBERS = [
     role: "Member",
     level: 4,
     defaultPassword: "N3cro#8Lv!51Q",
-    defaultPin: "927416",
+    defaultPin: "777007",
     status: "online",
     profitShare: "4%",
     weeklyEarnings: 4800
@@ -162,7 +162,7 @@ const INITIAL_MEMBERS = [
     role: "Member",
     level: 4,
     defaultPassword: "Hav0c@6Rx#39B",
-    defaultPin: "402857",
+    defaultPin: "777006",
     status: "em missão",
     profitShare: "4%",
     weeklyEarnings: 4800
@@ -174,7 +174,7 @@ const INITIAL_MEMBERS = [
     role: "Member",
     level: 4,
     defaultPassword: "Sys!4Km@87Yz",
-    defaultPin: "638219",
+    defaultPin: "777008",
     status: "online",
     profitShare: "4%",
     weeklyEarnings: 4800
@@ -186,7 +186,7 @@ const INITIAL_MEMBERS = [
     role: "Member",
     level: 4,
     defaultPassword: "K4ge#2Wp!95Nt",
-    defaultPin: "751604",
+    defaultPin: "777009",
     status: "online",
     profitShare: "4%",
     weeklyEarnings: 4800
@@ -534,24 +534,25 @@ function ensureCollections(data) {
 }
 
 function initDb() {
-  if (!fs.existsSync(DB_DIR)) {
-    fs.mkdirSync(DB_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(DB_FILE)) {
-    const data = getInitialData();
-    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf8');
-    return data;
-  }
   try {
-    const raw = fs.readFileSync(DB_FILE, 'utf8');
-    const parsed = JSON.parse(raw);
-    return ensureCollections(parsed);
+    if (fs.existsSync(DB_FILE)) {
+      const raw = fs.readFileSync(DB_FILE, 'utf8');
+      const parsed = JSON.parse(raw);
+      return ensureCollections(parsed);
+    }
   } catch (err) {
-    console.error("Erro ao ler database.json, recriando...", err);
-    const data = getInitialData();
-    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf8');
-    return data;
+    console.error("Erro ao ler database.json:", err.message);
   }
+  // Arquivo ausente ou ilegível: usa dados iniciais em memória
+  // (no Vercel o disco é somente leitura — não tenta gravar)
+  const data = getInitialData();
+  try {
+    if (!fs.existsSync(DB_DIR)) fs.mkdirSync(DB_DIR, { recursive: true });
+    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf8');
+  } catch (_) {
+    /* serverless / read-only — ok */
+  }
+  return data;
 }
 
 function getDb() {
@@ -559,12 +560,17 @@ function getDb() {
 }
 
 function saveDb(data) {
-  if (!fs.existsSync(DB_DIR)) {
-    fs.mkdirSync(DB_DIR, { recursive: true });
+  // No Vercel (serverless) o filesystem é somente leitura — não quebra o login
+  try {
+    if (!fs.existsSync(DB_DIR)) {
+      fs.mkdirSync(DB_DIR, { recursive: true });
+    }
+    const tempFile = `${DB_FILE}.tmp`;
+    fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), 'utf8');
+    fs.renameSync(tempFile, DB_FILE);
+  } catch (err) {
+    console.warn('[DB] saveDb ignorado (filesystem somente leitura / serverless):', err.message);
   }
-  const tempFile = `${DB_FILE}.tmp`;
-  fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), 'utf8');
-  fs.renameSync(tempFile, DB_FILE);
 }
 
 function findMember(identifier) {
@@ -605,38 +611,46 @@ function updateMemberPin(identifier, newPin) {
 }
 
 function recordLogin(username, ip, success = true, action = "LOGIN", hwid = null) {
-  const db = getDb();
-  const member = db.members.find(m =>
-    m.username.toLowerCase() === username.toLowerCase() ||
-    m.name.toLowerCase() === username.toLowerCase()
-  );
-  const now = new Date();
-  const timestamp = now.toISOString().replace('T', ' ').substring(0, 19);
+  try {
+    const database = getDb();
+    if (!database.members) database.members = [];
+    if (!database.auditLogs) database.auditLogs = [];
+    const clean = String(username || '').toLowerCase();
+    const member = database.members.find(m =>
+      (m.username && m.username.toLowerCase() === clean) ||
+      (m.name && m.name.toLowerCase() === clean)
+    );
+    const now = new Date();
+    const timestamp = now.toISOString().replace('T', ' ').substring(0, 19);
 
-  if (member && success) {
-    member.lastLogin = timestamp;
-    member.status = 'online';
+    if (member && success) {
+      member.lastLogin = timestamp;
+      member.status = 'online';
+    }
+
+    const logEntry = {
+      id: `log_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+      member: member ? member.name : username,
+      role: member ? member.role : 'DESCONHECIDO',
+      action: action,
+      status: success ? "SUCESSO" : "BLOQUEADO",
+      ip: ip || "127.0.0.1",
+      hwid: hwid || null,
+      timestamp: timestamp
+    };
+
+    database.auditLogs.unshift(logEntry);
+    if (database.auditLogs.length > 200) {
+      database.auditLogs = database.auditLogs.slice(0, 200);
+    }
+
+    saveDb(database);
+    syncToSupabase('recordLogin', () => supabaseDb.recordLogin(username, ip, success));
+    return logEntry;
+  } catch (err) {
+    console.warn('[recordLogin]', err.message);
+    return null;
   }
-
-  const logEntry = {
-    id: `log_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
-    member: member ? member.name : username,
-    role: member ? member.role : 'DESCONHECIDO',
-    action: action,
-    status: success ? "SUCESSO" : "BLOQUEADO",
-    ip: ip || "127.0.0.1",
-    hwid: hwid || null,
-    timestamp: timestamp
-  };
-
-  db.auditLogs.unshift(logEntry);
-  if (db.auditLogs.length > 200) {
-    db.auditLogs = db.auditLogs.slice(0, 200);
-  }
-
-  saveDb(db);
-  syncToSupabase('recordLogin', () => supabaseDb.recordLogin(username, ip, success));
-  return logEntry;
 }
 
 // ==========================================

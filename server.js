@@ -157,28 +157,41 @@ app.get('/api/supabase/status', async (req, res) => {
 
 // Lista de codinomes para o seletor da tela de login (sem dados confidenciais)
 app.get('/api/members/public', async (req, res) => {
-  let members = [];
-  if (db.isSupabaseConfigured()) {
-    try {
-      members = await db.supabaseDb.getMembers();
-    } catch (e) {}
+  try {
+    let members = [];
+    if (db.isSupabaseConfigured()) {
+      try {
+        members = await db.supabaseDb.getMembers();
+      } catch (e) {
+        console.warn('[members/public] supabase:', e.message);
+      }
+    }
+    if (!members || members.length === 0) {
+      try {
+        members = (db.getDb() || {}).members || [];
+      } catch (e) {
+        console.warn('[members/public] local db:', e.message);
+        members = [];
+      }
+    }
+    const publicMembers = (members || []).map(m => ({
+      id: m.id,
+      username: m.username,
+      name: m.name,
+      role: m.role,
+      level: m.level
+    }));
+    return res.json({ success: true, members: publicMembers });
+  } catch (err) {
+    console.error('[members/public]', err);
+    return res.status(500).json({ success: false, error: 'Erro ao listar membros.', detail: String(err.message || err) });
   }
-  if (!members || members.length === 0) {
-    members = db.getDb().members;
-  }
-  const publicMembers = members.map(m => ({
-    id: m.id,
-    username: m.username,
-    name: m.name,
-    role: m.role,
-    level: m.level
-  }));
-  res.json({ success: true, members: publicMembers });
 });
 
 // Rota de Login: Acesso restrito apenas para membros com validação estrita de PIN de 6 dígitos
 app.post('/api/auth/login', async (req, res) => {
-  const { username, pin, hwid } = req.body;
+  try {
+  const { username, pin, hwid } = req.body || {};
   const ip = getClientIp(req);
 
   // 1. Verificação de rate limiting / proteção contra força bruta no PIN por IP e por Usuário
@@ -284,12 +297,14 @@ app.post('/api/auth/login', async (req, res) => {
   db.recordLogin(member.username, ip, true, "LOGIN", hwid || null);
   const token = generateMemberToken(member);
 
-  // Armazena cookie de sessão seguro
+  // Cookie de sessão (HTTPS no Vercel = secure)
+  const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https' || process.env.VERCEL === '1';
   res.cookie('nzi_token', token, {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production'
+    secure: isHttps,
+    path: '/'
   });
 
   return res.json({
@@ -309,6 +324,14 @@ app.post('/api/auth/login', async (req, res) => {
       weeklyEarnings: member.weeklyEarnings
     }
   });
+  } catch (err) {
+    console.error('[auth/login]', err);
+    return res.status(500).json({
+      success: false,
+      error: 'Erro interno no login. Tente novamente.',
+      detail: String(err && err.message ? err.message : err)
+    });
+  }
 });
 
 // Logout seguro do membro
@@ -1343,6 +1366,17 @@ app.post('/api/admin/security/:username/reset-hwid', requireAdminAuth, (req, res
 // RASTREAMENTO DE ACESSOS (estatísticas por IP, localização aproximada, LGPD)
 // ==========================================
 require('./tracking').mount(app, { requireAdminAuth });
+
+// Erros não tratados nas rotas (evita HTML genérico 500 no Vercel)
+app.use((err, req, res, next) => {
+  console.error('[ERROR]', err);
+  if (res.headersSent) return next(err);
+  res.status(500).json({
+    success: false,
+    error: 'Erro interno do servidor.',
+    detail: String(err && err.message ? err.message : err)
+  });
+});
 
 // Middleware Global de Tratamento de 404
 app.use((req, res) => {
