@@ -1,0 +1,823 @@
+{
+  "financials": {
+    "totalVault": 1290000,
+    "weeklyProfit": 165000,
+    "currency": "BRL",
+    "lastDistribution": "2026-10-16 23:45",
+    "rules": {
+      "level1": "40% (Owner)",
+      "level2": "25% (Founder)",
+      "level3": "15% total (7.5% por Posse)",
+      "level4": "20% total (4% por Membro)"
+    }
+  },
+  "operations": [
+    {
+      "id": "op_1792214727631",
+      "title": "Operação Fênix",
+      "status": "Em andamento",
+      "target": 180000,
+      "leader": "Ph Labubu",
+      "priority": "CRÍTICA",
+      "description": "Expansão de liquidez para operações discretas"
+    },
+    {
+      "id": "op_1",
+      "title": "Operação Caixa Rápido",
+      "status": "Em andamento",
+      "target": 65000,
+      "leader": "Ph Labubu",
+      "priority": "ALTA",
+      "description": "Controle de arrecadação regional e liquidez imediata."
+    },
+    {
+      "id": "op_2",
+      "title": "Lavagem & Conversão Cripto",
+      "status": "Ativo",
+      "target": 150000,
+      "leader": "DG",
+      "priority": "CRÍTICA",
+      "description": "Roteamento anônimo e conversão fria via Monero e mixer de liquidez."
+    },
+    {
+      "id": "op_3",
+      "title": "Expansão da Zona Sul",
+      "status": "Planejada",
+      "target": 90000,
+      "leader": "God & Fact",
+      "priority": "MÉDIA",
+      "description": "Prospecção de novos pontos estratégicos de arrecadação."
+    }
+  ],
+  "announcements": [
+    {
+      "id": "ann_1792214727675",
+      "author": "Ph Labubu",
+      "role": "Owner",
+      "date": "2026-10-17 05:25",
+      "title": "ORDEM DO DIA: METAS ATINGIDAS",
+      "content": "Parabéns a todos os membros pelo rendimento desta semana.",
+      "pinned": true
+    },
+    {
+      "id": "ann_1",
+      "author": "Ph Labubu",
+      "role": "Owner",
+      "date": "2026-10-16 23:45",
+      "title": "DIVISÃO DO CAIXA SEMANAL CONCLUÍDA",
+      "content": "O fechamento semanal atingiu R$ 120.000 de lucro líquido. As cotas foram creditadas conforme a hierarquia. Dinheiro primeiro, sempre.",
+      "pinned": true
+    },
+    {
+      "id": "ann_2",
+      "author": "DG",
+      "role": "Founder",
+      "date": "2026-10-16 19:15",
+      "title": "ACESSO RESTRITO - NOVO SISTEMA DE PIN 6 DÍGITOS",
+      "content": "A partir de agora o acesso ao dashboard é exclusivo com autenticação de PIN numérico de 6 dígitos. Não repassem seus PINs para ninguém fora da Nzi.",
+      "pinned": true
+    }
+  ],
+  "transactions": [
+    {
+      "id": "tx_1792214727639",
+      "type": "IN",
+      "amount": 45000,
+      "description": "Liquidação Parcial Operação Fênix",
+      "date": "2026-10-17 05:25",
+      "author": "Ph Labubu"
+    },
+    {
+      "id": "tx_1",
+      "type": "IN",
+      "amount": 65000,
+      "description": "Liquidação Operação Caixa Rápido",
+      "date": "2026-10-16 21:00",
+      "author": "Ph Labubu"
+    },
+    {
+      "id": "tx_2",
+      "type": "IN",
+      "amount": 55000,
+      "description": "Conversão Cripto / Entrada",
+      "date": "2026-10-16 18:30",
+      "author": "DG"
+    },
+    {
+      "id": "tx_3",
+      "type": "OUT",
+      "amount": 48000,
+      "description": "Distribuição Semanal - Nível 1 (Owner: Ph Labubu)",
+      "date": "2026-10-16 23:45",
+      "author": "Sistema"
+    },
+    {
+      "id": "tx_4",
+      "type": "OUT",
+      "amount": 30000,
+      "description": "Distribuição Semanal - Nível 2 (Founder: DG)",
+      "date": "2026-10-16 23:45",
+      "author": "Sistema"
+    },
+    {
+      "id": "tx_5",
+      "type": "OUT",
+      "amount": 18000,
+      "description": "Distribuição Semanal - Nível 3 (Posses: God & Fact)",
+      "date": "2026-10-16 23:45",
+      "author": "Sistema"
+    },
+    {
+      "id": "tx_6",
+      "type": "OUT",
+      "amount": 24000,
+      "description": "Distribuição Semanal - Nível 4 (Membros: Anny, Havoc, Necro, SyS, Kage)",
+      "date": "2026-10-16 23:45",
+      "author": "Sistema"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "log_1792317611193_203",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "hwid": "hwid_7e77809b_12c_1108x693",
+      "timestamp": "2026-10-18 10:00:11"
+    },
+    {
+      "id": "log_1792317487587_695",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:58:07"
+    },
+    {
+      "id": "log_1792317487519_902",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:58:07"
+    },
+    {
+      "id": "log_1792317487452_569",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:58:07"
+    },
+    {
+      "id": "log_1792317487386_801",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:58:07"
+    },
+    {
+      "id": "log_1792317487320_878",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:58:07"
+    },
+    {
+      "id": "log_1792317487237_831",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "127.0.0.1",
+      "hwid": "hwid_7e77809b_12c_1108x693",
+      "timestamp": "2026-10-18 09:58:07"
+    },
+    {
+      "id": "log_1792317365280_341",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:56:05"
+    },
+    {
+      "id": "log_1792317365214_57",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:56:05"
+    },
+    {
+      "id": "log_1792317365147_504",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:56:05"
+    },
+    {
+      "id": "log_1792317365078_678",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:56:05"
+    },
+    {
+      "id": "log_1792317365011_943",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:56:05"
+    },
+    {
+      "id": "log_1792317364932_92",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "127.0.0.1",
+      "hwid": "hwid_7e77809b_12c_1108x693",
+      "timestamp": "2026-10-18 09:56:04"
+    },
+    {
+      "id": "log_1792317299508_182",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:54:59"
+    },
+    {
+      "id": "log_1792317299440_863",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:54:59"
+    },
+    {
+      "id": "log_1792317299374_912",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:54:59"
+    },
+    {
+      "id": "log_1792317299307_168",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:54:59"
+    },
+    {
+      "id": "log_1792317299238_768",
+      "member": "Kage",
+      "role": "Member",
+      "action": "LOGIN_PIN_INCORRETO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": null,
+      "timestamp": "2026-10-18 09:54:59"
+    },
+    {
+      "id": "log_1792317299164_351",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN_IP_BLOQUEADO",
+      "status": "BLOQUEADO",
+      "ip": "127.0.0.1",
+      "hwid": "hwid_7e77809b_12c_1108x693",
+      "timestamp": "2026-10-18 09:54:59"
+    },
+    {
+      "id": "log_1792282232417_632",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "hwid": "hwid_7e77809b_12c_1108x693",
+      "timestamp": "2026-10-18 00:10:32"
+    },
+    {
+      "id": "log_1792269085440_729",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 20:31:25"
+    },
+    {
+      "id": "log_1792269078550_441",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "BLOQUEADO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 20:31:18"
+    },
+    {
+      "id": "log_1792232497113_576",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 10:21:37"
+    },
+    {
+      "id": "log_1792227299550_796",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 08:54:59"
+    },
+    {
+      "id": "log_1792227270079_226",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 08:54:30"
+    },
+    {
+      "id": "log_1792227264448_280",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 08:54:24"
+    },
+    {
+      "id": "log_1792227261821_817",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 08:54:21"
+    },
+    {
+      "id": "log_sec_1792226842043_783",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "CONSULTA_CREDENCIAIS: Bot Moderador NZI Guard",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 08:47:22"
+    },
+    {
+      "id": "log_1792226841926_329",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 08:47:21"
+    },
+    {
+      "id": "log_1792215685725_529",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 05:41:25"
+    },
+    {
+      "id": "log_1792215388339_586",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "BLOQUEADO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 05:36:28"
+    },
+    {
+      "id": "log_1792214727753_298",
+      "member": "Anny",
+      "role": "Member",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::ffff:127.0.0.1",
+      "timestamp": "2026-10-17 05:25:27"
+    },
+    {
+      "id": "log_1792214727611_946",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::ffff:127.0.0.1",
+      "timestamp": "2026-10-17 05:25:27"
+    },
+    {
+      "id": "log_1792214727539_704",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "BLOQUEADO",
+      "ip": "::ffff:127.0.0.1",
+      "timestamp": "2026-10-17 05:25:27"
+    },
+    {
+      "id": "log_1792214510314_167",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::ffff:127.0.0.1",
+      "timestamp": "2026-10-17 05:21:50"
+    },
+    {
+      "id": "log_1792214510244_997",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "BLOQUEADO",
+      "ip": "::ffff:127.0.0.1",
+      "timestamp": "2026-10-17 05:21:50"
+    },
+    {
+      "id": "log_1792212847545_425",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "::1",
+      "timestamp": "2026-10-17 04:54:07"
+    },
+    {
+      "id": "log_1",
+      "member": "Ph Labubu",
+      "role": "Owner",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "10.13.37.1",
+      "timestamp": "2026-10-17 01:20:00"
+    },
+    {
+      "id": "log_2",
+      "member": "DG",
+      "role": "Founder",
+      "action": "LOGIN",
+      "status": "SUCESSO",
+      "ip": "10.13.37.4",
+      "timestamp": "2026-10-17 01:25:30"
+    }
+  ],
+  "members": [
+    {
+      "id": "mem_1",
+      "username": "ph_labubu",
+      "name": "Ph Labubu",
+      "role": "Owner",
+      "level": 1,
+      "pinHash": "$2b$10$02ZvVzP3ounzqlPzG0SqZ.a7ixMGnV.kaMts..ae/O5SFxBp9wfP2",
+      "lastLogin": "2026-10-18 10:00:11",
+      "status": "online",
+      "profitShare": "40%",
+      "weeklyEarnings": 48000,
+      "createdAt": "2026-10-17T04:53:43.826Z",
+      "trustedIp": null,
+      "trustedHwid": null
+    },
+    {
+      "id": "mem_2",
+      "username": "dg",
+      "name": "DG",
+      "role": "Founder",
+      "level": 2,
+      "pinHash": "$2b$10$VnrFLiZ3swaSMckAq/F3oeJLUU29wsyu0Il8R8v9cgmek5rUTDMU2",
+      "lastLogin": null,
+      "status": "online",
+      "profitShare": "25%",
+      "weeklyEarnings": 30000,
+      "createdAt": "2026-10-17T04:53:43.889Z",
+      "trustedIp": null,
+      "trustedHwid": null
+    },
+    {
+      "id": "mem_3",
+      "username": "god",
+      "name": "God",
+      "role": "Posse",
+      "level": 3,
+      "pinHash": "$2b$10$nIR7Mlp2uyLTTz2d9c6sCORS1zKKyhB3etKMv6b0E6sLaYnK6a0ZW",
+      "lastLogin": null,
+      "status": "em operação",
+      "profitShare": "7.5%",
+      "weeklyEarnings": 9000,
+      "createdAt": "2026-10-17T04:53:43.951Z",
+      "trustedIp": null,
+      "trustedHwid": null
+    },
+    {
+      "id": "mem_4",
+      "username": "fact",
+      "name": "Fact",
+      "role": "Posse",
+      "level": 3,
+      "pinHash": "$2b$10$vj2.J3cG45aIrHVQNqm.Xu/HvfIbQfjZSQzcDhI36Mqb0iS/.NO0i",
+      "lastLogin": null,
+      "status": "online",
+      "profitShare": "7.5%",
+      "weeklyEarnings": 9000,
+      "createdAt": "2026-10-17T04:53:44.016Z",
+      "trustedIp": null,
+      "trustedHwid": null
+    },
+    {
+      "id": "mem_5",
+      "username": "anny",
+      "name": "Anny",
+      "role": "Member",
+      "level": 4,
+      "pinHash": "$2b$10$WRC6QFpvYVNxwPlM4ict3O.lJT/cBtVJZCduQ3A79ITXJuNVyP2xq",
+      "lastLogin": "2026-10-17 05:25:27",
+      "status": "online",
+      "profitShare": "4%",
+      "weeklyEarnings": 4800,
+      "createdAt": "2026-10-17T04:53:44.077Z",
+      "trustedIp": null,
+      "trustedHwid": null
+    },
+    {
+      "id": "mem_6",
+      "username": "havoc",
+      "name": "Havoc",
+      "role": "Member",
+      "level": 4,
+      "pinHash": "$2b$10$64uH8iqoboh9Hj02mn8VZeso6pSsYRb51JUv5UxN1XbVC3tmr9vWK",
+      "lastLogin": null,
+      "status": "em missão",
+      "profitShare": "4%",
+      "weeklyEarnings": 4800,
+      "createdAt": "2026-10-17T04:53:44.138Z",
+      "trustedIp": null,
+      "trustedHwid": null
+    },
+    {
+      "id": "mem_7",
+      "username": "necro",
+      "name": "Necro",
+      "role": "Member",
+      "level": 4,
+      "pinHash": "$2b$10$wm1DrR5s4JzTusabrAX/h.BYjC4mTMPwK/0Az7XL3pC810QPRiIne",
+      "lastLogin": null,
+      "status": "online",
+      "profitShare": "4%",
+      "weeklyEarnings": 4800,
+      "createdAt": "2026-10-17T04:53:44.200Z",
+      "trustedIp": null,
+      "trustedHwid": null
+    },
+    {
+      "id": "mem_8",
+      "username": "sys",
+      "name": "SyS",
+      "role": "Member",
+      "level": 4,
+      "pinHash": "$2b$10$25hjAvsk/1mcyJkFeEieaOzp3NkmJmA1Hg0VoS2O.hwyvuFnrqDci",
+      "lastLogin": null,
+      "status": "online",
+      "profitShare": "4%",
+      "weeklyEarnings": 4800,
+      "createdAt": "2026-10-17T04:53:44.260Z",
+      "trustedIp": null,
+      "trustedHwid": null
+    },
+    {
+      "id": "mem_9",
+      "username": "kage",
+      "name": "Kage",
+      "role": "Member",
+      "level": 4,
+      "pinHash": "$2b$10$s7SfZf0HHdTJh.gYJsX0OO24S0TyKbC1mUzcxd3ADUfHXZNW74EnW",
+      "lastLogin": null,
+      "status": "online",
+      "profitShare": "4%",
+      "weeklyEarnings": 4800,
+      "createdAt": "2026-10-17T04:53:44.321Z",
+      "trustedIp": null,
+      "trustedHwid": null
+    }
+  ],
+  "posts": [
+    {
+      "id": "post_1",
+      "title": "Novo Conteúdo NZI CC - Diretrizes & Ferramentas",
+      "description": "Bem-vindo à área oficial de CC da NZI Mafia.\n\nEste espaço centraliza os recursos e diretrizes operacionais para os membros da organização.\n\nOrientações:\n- Manter sigilo das diretrizes e procedimentos internos.\n- Utilizar apenas os canais autorizados de suporte e homologação.\n- Verificar a integridade das listas e dados antes de qualquer execução.\n\nPara suporte direto, consulte a Central de Links ou acione um moderador no Discord oficial.",
+      "category": "CC",
+      "status": "Publicado",
+      "image": "",
+      "link": "https://discord.gg/m0gshot",
+      "publishedAt": "2026-10-17 00:00",
+      "createdAt": "2026-10-17 00:00",
+      "updatedAt": "2026-10-17 00:00",
+      "author": "Ph Labubu"
+    },
+    {
+      "id": "post_2",
+      "title": "Painel Central - Gestão & Monitoramento Operacional",
+      "description": "O novo Painel da NZI foi atualizado para fornecer visão integrada dos módulos da organização.\n\nRecursos disponíveis:\n- Métricas em tempo real do sistema\n- Gestão de publicações divididas por categoria\n- Temporizadores regressivos sincronizados com o servidor\n- Armazenamento com criptografia AES-256 no banco de dados persistente.\n\nConfigurações adicionais podem ser ajustadas diretamente na aba de Operações pela diretoria.",
+      "category": "Painel",
+      "status": "Publicado",
+      "image": "",
+      "link": "/dashboard",
+      "publishedAt": "2026-10-17 01:00",
+      "createdAt": "2026-10-17 01:00",
+      "updatedAt": "2026-10-17 01:00",
+      "author": "DG"
+    },
+    {
+      "id": "post_3",
+      "title": "Segurança de Acessos & Bots Oficiais Discord",
+      "description": "Todas as integrações do Discord operam com proteção estrita no servidor.\n\n- Credenciais, tokens e webhooks protegidos contra consultas não autorizadas\n- Exibição pública restrita a informações institucionais\n- Histórico de auditoria com IP e registro de quem acessou.",
+      "category": "Conta Discord",
+      "status": "Publicado",
+      "image": "",
+      "link": "",
+      "publishedAt": "2026-10-17 02:00",
+      "createdAt": "2026-10-17 02:00",
+      "updatedAt": "2026-10-17 02:00",
+      "author": "Ph Labubu"
+    },
+    {
+      "id": "post_4",
+      "title": "Central de Links Oficiais - Segurança & Protocolos",
+      "description": "Mantenha-se conectado aos canais oficiais da NZI Mafia através dos nossos 4 pilares: Root, Discord, Telegram e TikTok.\n\nTodos os links passam por validação de protocolo seguro HTTPS e podem ser editados em tempo real pelo painel de Operações.",
+      "category": "Central de Links",
+      "status": "Publicado",
+      "image": "",
+      "link": "",
+      "publishedAt": "2026-10-17 03:00",
+      "createdAt": "2026-10-17 03:00",
+      "updatedAt": "2026-10-17 03:00",
+      "author": "DG"
+    },
+    {
+      "id": "post_5",
+      "title": "Briefing: Grande Reunião e Alinhamento Estratégico",
+      "description": "Publicação informativa sobre o próximo evento agendado da organização.\n\nAcompanhe a contagem regressiva oficial na página de Eventos para participar no horário exato de abertura das salas de conferência.",
+      "category": "Eventos",
+      "status": "Publicado",
+      "image": "",
+      "link": "",
+      "publishedAt": "2026-10-17 04:00",
+      "createdAt": "2026-10-17 04:00",
+      "updatedAt": "2026-10-17 04:00",
+      "author": "Ph Labubu"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt_1",
+      "title": "Evento Confirmado",
+      "description": "Reunião executiva da liderança com acompanhamento do temporizador regressivo oficial. Apresentação das diretrizes e metas da semana.",
+      "eventDate": "2026-10-17T23:00",
+      "timezone": "America/Sao_Paulo (GMT-3)",
+      "startTime": "23:00",
+      "endTime": "01:00",
+      "status": "Confirmado",
+      "published": true,
+      "createdAt": "2026-10-17 04:00",
+      "updatedAt": "2026-10-17 04:00"
+    },
+    {
+      "id": "evt_2",
+      "title": "Operação Noturna de Alinhamento",
+      "description": "Coordenação estratégica das equipes e verificação de recursos no servidor.",
+      "eventDate": "2026-10-18T21:00",
+      "timezone": "America/Sao_Paulo (GMT-3)",
+      "startTime": "21:00",
+      "endTime": "23:30",
+      "status": "Agendado",
+      "published": true,
+      "createdAt": "2026-10-17 04:10",
+      "updatedAt": "2026-10-17 04:10"
+    },
+    {
+      "id": "evt_3",
+      "title": "Sessão Aberta de Debate e Dúvidas",
+      "description": "Canal aberto para membros interagirem com a liderança no Discord oficial.",
+      "eventDate": "2026-10-16T19:00",
+      "timezone": "America/Sao_Paulo (GMT-3)",
+      "startTime": "19:00",
+      "endTime": "20:30",
+      "status": "Em andamento",
+      "published": true,
+      "createdAt": "2026-10-16 18:00",
+      "updatedAt": "2026-10-17 00:00"
+    }
+  ],
+  "links": {
+    "root": {
+      "key": "root",
+      "name": "Root",
+      "icon": "terminal",
+      "url": "https://root.nzimafia.com",
+      "description": "Infraestrutura terminal e acesso centralizado ao núcleo da NZI.",
+      "isAvailable": true
+    },
+    "discord": {
+      "key": "discord",
+      "name": "Discord",
+      "icon": "discord",
+      "url": "https://discord.gg/m0gshot",
+      "description": "Servidor oficial da comunidade e comunicados da liderança.",
+      "isAvailable": true
+    },
+    "telegram": {
+      "key": "telegram",
+      "name": "Telegram",
+      "icon": "telegram",
+      "url": "https://t.me/+Om4I_IjpI6liNmMx",
+      "description": "Canal rápido e avisos de emergência prioritários.",
+      "isAvailable": true
+    },
+    "tiktok": {
+      "key": "tiktok",
+      "name": "TikTok",
+      "icon": "tiktok",
+      "url": "https://www.tiktok.com/@nzimafia_oficial",
+      "description": "Canal oficial verificado no TikTok",
+      "isAvailable": true
+    }
+  },
+  "discordAccounts": [
+    {
+      "id": "disc_1",
+      "title": "Bot Moderador NZI Guard",
+      "botTag": "NZIGuard#0001",
+      "description": "Bot oficial responsável pela verificação de acessos, moderação e logs automatizados.",
+      "permissions": "Administrador, Gerenciar Cargos, Banir Membros, Ver Auditoria",
+      "status": "Ativo",
+      "isPublicDisclosed": true,
+      "encryptedSecret": "02bea251d3fbb09fa355a87f67010a3ef5a4690625934fdb39c6e202205b25ccf263cf034c4012fd057c84b3529dba219825a5a7759cfa695ac2d4",
+      "secretIv": "21c7c1bcec31585fd02d14b4",
+      "secretTag": "464d90c1859d9368f3cf6c6e6d6c1887",
+      "createdAt": "2026-10-17 02:00",
+      "updatedAt": "2026-10-17 02:00"
+    },
+    {
+      "id": "disc_2",
+      "title": "Webhook de Transmissões VIP",
+      "botTag": "NZI-Broadcast#VIP",
+      "description": "Canal de envio automatizado de novidades e avisos urgentes nos canais prioritários.",
+      "permissions": "Enviar Mensagens, Inserir Links, Anexar Arquivos",
+      "status": "Ativo",
+      "isPublicDisclosed": true,
+      "encryptedSecret": "3e2fa49229d678f57ebc1dabf8cadff5e63b4ad313e26bf8ec5bc81b274f8fffddf1897166e6b54e0eff3145642d172bf608599173148ff2d4a682fb7a",
+      "secretIv": "151b29a5c4adbb6ed161a32f",
+      "secretTag": "ce427c9910e732dcd71d7a07edfdf030",
+      "createdAt": "2026-10-17 03:00",
+      "updatedAt": "2026-10-17 03:00"
+    }
+  ],
+  "ccAccounts": [],
+  "panelAccounts": []
+}
