@@ -5,7 +5,14 @@
       "src": "index.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["**"]
+        "includeFiles": [
+          "**/*.js",
+          "**/*.json",
+          "**/*.html",
+          "**/*.css",
+          "**/*.gif",
+          "**/*.png"
+        ]
       }
     }
   ],

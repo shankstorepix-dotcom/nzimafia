@@ -1,0 +1,25 @@
+COMO SUBIR NO GITHUB (tudo na RAIZ, sem pastas)
+
+1. Abra: https://github.com/shankstorepix-dotcom/nzimafia
+
+2. APAGUE estes arquivos se existirem (estão errados):
+   - api          (arquivo solto)
+   - .env         (NUNCA deixe senhas no GitHub!)
+   - public/      (se existir vazia)
+   - data/        (se existir vazia)
+
+3. Faça upload de TODOS os arquivos desta pasta na RAIZ do repo:
+   index.js, server.js, db.js, vercel.json, package.json,
+   database.json, index.html, dashboard.html, auth.js, ...
+
+4. No Vercel: Redeploy (Clear cache and redeploy)
+
+5. Teste: https://nzimafia.vercel.app/api/health
+   Deve mostrar membersCount: 9
+
+6. Login: ph_labubu / 777001
+
+Arquivos importantes:
+- index.js + vercel.json = entrada do Vercel
+- database.json = membros e PINs (na raiz!)
+- server.js + db.js = API de login

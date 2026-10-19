@@ -60,18 +60,25 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
-// Configuração restritiva de CORS (apenas localhost/127.0.0.1 em dev ou ALLOWED_ORIGINS em produção)
-const allowedOrigins = process.env.ALLOWED_ORIGINS 
+// Configuração de CORS:
+// - Em dev: aceita localhost e 127.0.0.1
+// - Na Vercel: aceita domínios *.vercel.app automaticamente
+// - Produção customizada: defina ALLOWED_ORIGINS (csv) no painel de env vars da Vercel
+const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim().toLowerCase())
   : [];
 
 app.use(cors({
   origin: function (origin, callback) {
+    // Requisições sem Origin (server-to-server, Postman, curl) — sempre permite
     if (!origin) return callback(null, true);
     try {
       const parsed = new URL(origin);
-      const isLocalhost = parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1';
-      if (isLocalhost || allowedOrigins.includes(origin.toLowerCase())) {
+      const hostname = parsed.hostname;
+      const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
+      // Aceita qualquer subdomínio *.vercel.app (preview e produção)
+      const isVercel = hostname.endsWith('.vercel.app');
+      if (isLocalhost || isVercel || allowedOrigins.includes(origin.toLowerCase())) {
         return callback(null, true);
       }
     } catch (_) {}
