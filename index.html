@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lançamento Nzi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: uma tela só, centralizada. Selo no topo, título NZI MAFIA gigante, linha "lançamento", quatro blocos de contagem (dias, horas, minutos, segundos), barra de progresso e a hora do lançamento. Tema vermelho sobre preto avermelhado, igual ao site. */
+:root {
+  --bg: #0b0606;
+  --panel: #130a0a;
+  --line: #3a1719;
+  --fg: #efdede;
+  --mute: #9b7a7c;
+  --accent: #ff2a3a;
+  --accent-deep: #6e0d16;
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(255,42,58,.22), transparent 70%),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,.018) 0 1px, transparent 1px 3px);
+  background-repeat: no-repeat, repeat;
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 40px;
+}
+.wrap { max-width: 920px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+.top {
+  width: 100%; display: flex; justify-content: space-between; gap: 12px; padding-block: 16px;
+  border-bottom: 1px solid var(--line); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute);
+}
+.live { color: var(--accent); }
+.live::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-right: 8px; animation: blink 1.2s steps(2) infinite; }
+
+.kicker { margin: 56px 0 14px; font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: var(--accent); }
+h1 {
+  margin: 0; font-family: var(--display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(76px, 20vw, 190px); line-height: .84; letter-spacing: .01em;
+}
+h1 .ln { display: block; white-space: nowrap; }
+h1 .acc { color: var(--accent); text-shadow: 0 0 36px rgba(255,42,58,.55); }
+h1.glitching { animation: glitch .42s steps(1) 1; }
+@keyframes glitch {
+  0%   { text-shadow: 5px 0 var(--accent), -5px 0 #fff; transform: translate(3px, 0); }
+  20%  { text-shadow: -6px 0 var(--accent), 6px 0 var(--accent-deep); transform: translate(-4px, 1px) skewX(-5deg); }
+  45%  { text-shadow: 4px 0 #fff, -4px 0 var(--accent); transform: translate(2px, -1px); }
+  70%  { text-shadow: -5px 0 var(--accent); transform: translate(-1px, 0) skewX(3deg); }
+  100% { text-shadow: none; transform: none; }
+}
+.launch {
+  margin: 22px 0 0; font-family: var(--display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(28px, 6vw, 46px); letter-spacing: .32em; padding-left: .32em; line-height: 1;
+}
+.typeline { min-height: 1.6em; margin: 14px 0 0; font-size: 14px; color: var(--accent); }
+.typeline::after { content: ""; display: inline-block; width: 8px; height: 15px; margin-left: 3px; background: var(--accent); vertical-align: -2px; animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.clock { width: 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 44px; }
+.cell { min-width: 0; padding: 20px 6px 14px; border: 1px solid var(--accent-deep); background: var(--panel); box-shadow: 0 0 40px rgba(255,42,58,.1); }
+.cell .num {
+  display: block; font-family: var(--display); font-weight: 900; line-height: .9;
+  font-size: clamp(48px, 13vw, 128px); font-variant-numeric: tabular-nums; color: var(--fg);
+}
+.cell .lbl { display: block; margin-top: 10px; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); }
+.cell.sec .num { color: var(--accent); text-shadow: 0 0 24px rgba(255,42,58,.5); }
+
+.bar { width: 100%; margin-top: 28px; }
+.bar .track { height: 6px; background: var(--line); overflow: hidden; }
+.bar .fill { height: 100%; width: 0; background: var(--accent); box-shadow: 0 0 14px rgba(255,42,58,.7); }
+.bar .meta { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+
+.when { margin: 36px 0 0; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.when b { color: var(--fg); font-weight: 600; }
+
+.online { display: none; width: 100%; margin-top: 44px; padding: 40px 16px; border: 1px solid var(--accent); background: var(--panel); box-shadow: 0 0 60px rgba(255,42,58,.3); }
+.online .big { display: block; font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(52px, 14vw, 120px); line-height: .9; color: var(--accent); text-shadow: 0 0 30px rgba(255,42,58,.6); }
+.online p { margin: 12px 0 0; color: var(--mute); }
+body.done .clock, body.done .bar { display: none; }
+body.done .online { display: block; }
+
+footer { margin-top: auto; padding-top: 48px; width: 100%; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+
+@media (max-width: 520px) {
+  .clock { gap: 8px; }
+  .cell { padding: 16px 2px 12px; }
+  .cell .lbl { font-size: 9px; letter-spacing: .12em; }
+  .kicker { margin-top: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .live::before, .typeline::after { animation: none; }
+  h1.glitching { animation: none; }
+}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+html, body { margin: 0; min-height: 100%; }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span>Nzi Mafia</span>
+    <span class="live">em breve</span>
+  </header>
+
+  <p class="kicker">Organizated Crime</p>
+  <h1 id="title" aria-label="Nzi Mafia"><span class="ln"><span data-t="NZI">NZI</span></span><span class="ln acc"><span data-t="MAFIA">MAFIA</span></span></h1>
+  <p class="launch">Lançamento Nzi</p>
+  <p class="typeline" id="typeline" aria-hidden="true">&gt; o site vai ao ar à meia-noite</p>
+
+  <div class="clock" id="clock" role="timer" aria-label="Tempo restante para o lançamento">
+    <div class="cell"><span class="num" id="d">00</span><span class="lbl">Dias</span></div>
+    <div class="cell"><span class="num" id="h">00</span><span class="lbl">Horas</span></div>
+    <div class="cell"><span class="num" id="m">00</span><span class="lbl">Minutos</span></div>
+    <div class="cell sec"><span class="num" id="s">00</span><span class="lbl">Segundos</span></div>
+  </div>
+
+  <div class="bar" id="bar">
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <div class="meta"><span>Contagem</span><span id="pct">0%</span></div>
+  </div>
+
+  <p class="when">Lançamento: <b>meia-noite</b> · 25/10/2026 · 00:00 (Brasília)</p>
+
+  <div class="online" id="online">
+    <span class="big">Nzi no ar</span>
+    <p>A contagem acabou. O site da Nzi Mafia já está disponível.</p>
+  </div>
+
+  <footer>
+    <span>Nzi Mafia</span>
+    <span>Dinheiro primeiro</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  /* Lançamento: 25/10/2026 às 00:00 no horário de Brasília (UTC-03:00).
+     O instante é fixo, então a contagem é a mesma em qualquer fuso. */
+  var TARGET = Date.parse('2026-10-25T00:00:00-03:00');
+  /* A barra de progresso mede desde o início da contagem (24/10 às 12:00). */
+  var START = Date.parse('2026-10-24T12:00:00-03:00');
+
+  var elD = document.getElementById('d'), elH = document.getElementById('h'),
+      elM = document.getElementById('m'), elS = document.getElementById('s');
+  var fill = document.getElementById('fill'), pct = document.getElementById('pct');
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  function update() {
+    var now = Date.now();
+    var diff = TARGET - now;
+    if (diff <= 0) {
+      document.body.classList.add('done');
+      document.querySelector('.live').textContent = 'no ar';
+      document.getElementById('typeline').textContent = '> acesso liberado';
+      return false;
+    }
+    var total = Math.floor(diff / 1000);
+    var d = Math.floor(total / 86400);
+    var h = Math.floor((total % 86400) / 3600);
+    var m = Math.floor((total % 3600) / 60);
+    var s = total % 60;
+    elD.textContent = pad(d); elH.textContent = pad(h); elM.textContent = pad(m); elS.textContent = pad(s);
+    var p = Math.max(0, Math.min(100, ((now - START) / (TARGET - START)) * 100));
+    fill.style.width = p.toFixed(2) + '%';
+    pct.textContent = Math.floor(p) + '%';
+    return true;
+  }
+  if (update()) {
+    var iv = setInterval(function () { if (!update()) clearInterval(iv); }, 250);
+  }
+
+  /* ---------- título e texto estilo hacker ---------- */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  var h1 = document.getElementById('title');
+  var parts = Array.prototype.slice.call(h1.querySelectorAll('[data-t]'));
+  var GL = '01#$%&@*<>/\\[]{}=+_';
+  function rnd() { return GL.charAt(Math.floor(Math.random() * GL.length)); }
+  function glitch() {
+    h1.classList.remove('glitching');
+    void h1.offsetWidth;
+    h1.classList.add('glitching');
+  }
+  function decode() {
+    var total = parts.reduce(function (n, p) { return n + p.getAttribute('data-t').length; }, 0);
+    var frame = 0;
+    var timer = setInterval(function () {
+      var pos = 0;
+      parts.forEach(function (p) {
+        var t = p.getAttribute('data-t'), out = '';
+        for (var i = 0; i < t.length; i++, pos++) out += (frame / 2 > pos) ? t.charAt(i) : rnd();
+        p.textContent = out;
+      });
+      frame++;
+      if (frame / 2 > total + 1) {
+        clearInterval(timer);
+        parts.forEach(function (p) { p.textContent = p.getAttribute('data-t'); });
+        setTimeout(glitch, 900);
+        setTimeout(glitch, 3600);
+        setTimeout(decode, 9000);
+      }
+    }, 55);
+  }
+  decode();
+
+  var lines = [
+    '> o site vai ao ar à meia-noite',
+    '> contagem.regressiva(--ativa)',
+    '> dinheiro primeiro',
+    '> nzi.lancar(00:00)'
+  ];
+  var el = document.getElementById('typeline');
+  var li = 0, ci = lines[0].length, del = true;
+  function tick() {
+    if (document.body.classList.contains('done')) return;
+    var s = lines[li];
+    if (!del) {
+      ci++;
+      el.textContent = s.slice(0, ci);
+      if (ci >= s.length) { del = true; return setTimeout(tick, 1900); }
+      return setTimeout(tick, 45 + Math.random() * 70);
+    }
+    ci--;
+    el.textContent = s.slice(0, Math.max(ci, 0));
+    if (ci <= 0) { del = false; ci = 0; li = (li + 1) % lines.length; return setTimeout(tick, 380); }
+    return setTimeout(tick, 22);
+  }
+  setTimeout(tick, 2600);
+})();
+</script>
+</body>
+</html>
